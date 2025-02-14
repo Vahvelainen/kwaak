@@ -92,7 +92,7 @@ function App() {
     <div className="app-container">
       <div className="chat-container">
         <div className="header">
-          <h1>Kwaak!</h1>
+          <div></div>
           <button onClick={() => setShowApiKeyInput(true)} className="api-key-button">
             <KeyIcon className="h-6 w-6" />
           </button>
@@ -100,6 +100,7 @@ function App() {
         
         <div className="duck-image-container">
           <img src="/duckie.png" alt="Rubber Duck" className="duck-image" />
+          <h1>Kwaak!</h1>
         </div>
 
         <div className="messages-container">
@@ -124,6 +125,7 @@ function App() {
           />
           <button onClick={sendMessage} className="send-button">
             <PaperAirplaneIcon className="h-6 w-6" />
+            <span>Ask Kwaak</span>
           </button>
         </div>
       </div>
