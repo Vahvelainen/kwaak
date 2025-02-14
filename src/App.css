@@ -1,0 +1,177 @@
+.app-container {
+  min-height: 100vh;
+  background-color: #FFFBEB;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-container {
+  flex: 1;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  max-width: 48rem;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.header h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #B89B00;
+}
+
+.api-key-button {
+  color: #B89B00;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.api-key-button:hover {
+  color: #FFD700;
+}
+
+.duck-image-container {
+  background-color: #FFF8DC;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.duck-image {
+  max-width: 200px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.messages-container {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.message {
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+}
+
+.message.user {
+  background-color: white;
+  color: #2C2C2C;
+  margin-left: 2rem;
+}
+
+.message.assistant {
+  background-color: #FFD700;
+  color: #510000;
+  margin-right: 2rem;
+}
+
+.input-container {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.message-input {
+  flex: 1;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 2px solid #FFD700;
+}
+
+.message-input:focus {
+  outline: none;
+  border-color: #B89B00;
+}
+
+.send-button {
+  background-color: #FFD700;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  border: none;
+}
+
+.send-button:hover {
+  background-color: #B89B00;
+}
+
+/* API Key Modal Styles */
+.api-key-modal {
+  min-height: 100vh;
+  background-color: #FFFBEB;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.api-key-form {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 24rem;
+  width: 100%;
+}
+
+.api-key-form h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #B89B00;
+}
+
+.input-group {
+  margin-bottom: 1rem;
+}
+
+.input-group label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #4B5563;
+  margin-bottom: 0.25rem;
+}
+
+.api-key-input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #D1D5DB;
+  border-radius: 0.375rem;
+  margin-top: 0.25rem;
+}
+
+.api-key-input:focus {
+  outline: none;
+  border-color: #FFD700;
+  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
+}
+
+.save-key-button {
+  width: 100%;
+  background-color: #FFD700;
+  color: white;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.save-key-button:hover {
+  background-color: #B89B00;
+} 
