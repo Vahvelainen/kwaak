@@ -69,6 +69,26 @@
   gap: 1rem;
   min-height: 200px;
   max-height: 400px;
+  scroll-behavior: smooth;
+  padding-right: 0.5rem;
+}
+
+/* For Webkit browsers (Chrome, Safari) */
+.messages-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.messages-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.messages-container::-webkit-scrollbar-thumb {
+  background-color: #FFD700;
+  border-radius: 4px;
+}
+
+.messages-container::-webkit-scrollbar-thumb:hover {
+  background-color: #B89B00;
 }
 
 .message {

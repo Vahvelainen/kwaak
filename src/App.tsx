@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { PaperAirplaneIcon, Cog6ToothIcon } from '@heroicons/react/24/solid'
 import Anthropic from '@anthropic-ai/sdk'
 import './App.css'
@@ -15,6 +15,15 @@ function App() {
   const [apiKey, setApiKey] = useState('')
   const [showSettings, setShowSettings] = useState(false)
   const [isTyping, setIsTyping] = useState(false)
+  const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages])
 
   useEffect(() => {
     const storedApiKey = localStorage.getItem('claude-api-key')
@@ -150,6 +159,7 @@ function App() {
               {message.isStreaming && <span className="typing-indicator">▊</span>}
             </div>
           ))}
+          <div ref={messagesEndRef} />
         </div>
 
         <div className="input-container">
