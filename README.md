@@ -82,7 +82,7 @@ MIT License - feel free to use and modify as needed!
 
 - Inspired by the classic rubber duck debugging technique
 - Powered by Anthropic's Claude AI
-- Duck image credit: [Add credit for your duck image here]
+- Duck image credit: freepik.com
 
 ---
 
