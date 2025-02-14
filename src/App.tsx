@@ -6,6 +6,7 @@ import './App.css'
 interface Message {
   role: 'user' | 'assistant'
   content: string
+  isStreaming?: boolean
 }
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
   const [input, setInput] = useState('')
   const [apiKey, setApiKey] = useState('')
   const [showSettings, setShowSettings] = useState(false)
+  const [isTyping, setIsTyping] = useState(false)
 
   useEffect(() => {
     const storedApiKey = localStorage.getItem('claude-api-key')
@@ -39,6 +41,7 @@ function App() {
     ]
     setMessages(newMessages)
     setInput('')
+    setIsTyping(true)
 
     try {
       const anthropic = new Anthropic({
@@ -53,17 +56,47 @@ function App() {
         messages: newMessages.map(msg => ({
           role: msg.role,
           content: msg.content
-        }))
+        })),
+        stream: true
       });
 
-      if (response.content[0].type === 'text') {
-        setMessages([...newMessages, { role: 'assistant', content: response.content[0].text }])
-      } else {
-        setMessages([...newMessages, { role: 'assistant', content: 'Kwaak! I can only respond with text!' }])
+      // Add an empty assistant message that we'll stream into
+      setMessages([...newMessages, { role: 'assistant', content: '', isStreaming: true }])
+      
+      let fullContent = ''
+      for await (const chunk of response) {
+        if (chunk.type === 'content_block_delta' && chunk.delta?.type === 'text_delta') {
+          fullContent += chunk.delta.text || ''
+          setMessages(prev => {
+            const updated = [...prev]
+            updated[updated.length - 1] = {
+              role: 'assistant',
+              content: fullContent,
+              isStreaming: true
+            }
+            return updated
+          })
+        }
       }
+
+      // Mark message as complete
+      setMessages(prev => {
+        const updated = [...prev]
+        updated[updated.length - 1] = {
+          role: 'assistant',
+          content: fullContent,
+          isStreaming: false
+        }
+        return updated
+      })
     } catch (error) {
       console.error('Error:', error)
-      setMessages([...newMessages, { role: 'assistant', content: 'Kwaak! Something went wrong! (Error communicating with the API)' }])
+      setMessages([...newMessages, { 
+        role: 'assistant', 
+        content: 'Kwaak! Something went wrong! (Error communicating with the API)'
+      }])
+    } finally {
+      setIsTyping(false)
     }
   }
 
@@ -111,9 +144,10 @@ function App() {
           {messages.map((message, index) => (
             <div
               key={index}
-              className={`message ${message.role}`}
+              className={`message ${message.role} ${message.isStreaming ? 'streaming' : ''}`}
             >
               {message.content}
+              {message.isStreaming && <span className="typing-indicator">▊</span>}
             </div>
           ))}
         </div>
@@ -123,11 +157,16 @@ function App() {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-            placeholder="Tell me what's on your mind..."
+            onKeyPress={(e) => e.key === 'Enter' && !isTyping && sendMessage()}
+            placeholder={isTyping ? "Kwaak is thinking..." : "Tell me what's on your mind..."}
             className="message-input"
+            disabled={isTyping}
           />
-          <button onClick={sendMessage} className="send-button">
+          <button 
+            onClick={sendMessage} 
+            className="send-button"
+            disabled={isTyping}
+          >
             <PaperAirplaneIcon className="h-6 w-6" />
             <span>Ask Kwaak</span>
           </button>

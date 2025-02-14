@@ -88,6 +88,36 @@
   margin-right: 2rem;
 }
 
+.message.streaming {
+  border: 2px solid #FFD700;
+}
+
+.typing-indicator {
+  display: inline-block;
+  margin-left: 4px;
+  animation: blink 1s step-end infinite;
+  color: #510000;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.message-input:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.send-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.send-button:disabled:hover {
+  background-color: #ccc;
+}
+
 .input-container {
   display: flex;
   gap: 0.5rem;
