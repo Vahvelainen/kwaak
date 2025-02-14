@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { PaperAirplaneIcon, KeyIcon } from '@heroicons/react/24/solid'
+import { PaperAirplaneIcon, Cog6ToothIcon } from '@heroicons/react/24/solid'
 import Anthropic from '@anthropic-ai/sdk'
 import './App.css'
 
@@ -12,24 +12,26 @@ function App() {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const [apiKey, setApiKey] = useState('')
-  const [showApiKeyInput, setShowApiKeyInput] = useState(false)
+  const [showSettings, setShowSettings] = useState(false)
 
   useEffect(() => {
     const storedApiKey = localStorage.getItem('claude-api-key')
     if (storedApiKey) {
       setApiKey(storedApiKey)
-    } else {
-      setShowApiKeyInput(true)
     }
   }, [])
 
   const saveApiKey = () => {
     localStorage.setItem('claude-api-key', apiKey)
-    setShowApiKeyInput(false)
+    setShowSettings(false)
   }
 
   const sendMessage = async () => {
     if (!input.trim()) return
+    if (!apiKey) {
+      setShowSettings(true)
+      return
+    }
 
     const newMessages = [
       ...messages,
@@ -65,36 +67,38 @@ function App() {
     }
   }
 
-  if (showApiKeyInput) {
-    return (
-      <div className="api-key-modal">
-        <div className="api-key-form">
-          <h1>Welcome to Kwaak!</h1>
-          <div className="input-group">
-            <label>Enter your Claude API Key</label>
-            <input
-              type="password"
-              value={apiKey}
-              onChange={(e) => setApiKey(e.target.value)}
-              className="api-key-input"
-              placeholder="sk-..."
-            />
-          </div>
-          <button onClick={saveApiKey} className="save-key-button">
-            Save API Key
-          </button>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div className="app-container">
+      {showSettings && (
+        <div className="settings-modal">
+          <div className="settings-content">
+            <div className="settings-header">
+              <h2>Settings</h2>
+              <button onClick={() => setShowSettings(false)} className="close-button">×</button>
+            </div>
+            <div className="input-group">
+              <label>Claude API Key</label>
+              <input
+                type="password"
+                value={apiKey}
+                onChange={(e) => setApiKey(e.target.value)}
+                className="api-key-input"
+                placeholder="sk-..."
+              />
+              <p className="api-key-help">Your API key will be stored locally in your browser.</p>
+            </div>
+            <button onClick={saveApiKey} className="save-key-button">
+              Save Settings
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="chat-container">
         <div className="header">
           <div></div>
-          <button onClick={() => setShowApiKeyInput(true)} className="api-key-button">
-            <KeyIcon className="h-6 w-6" />
+          <button onClick={() => setShowSettings(true)} className="settings-button" title="Settings">
+            <Cog6ToothIcon />
           </button>
         </div>
         
