@@ -145,7 +145,7 @@ function App() {
         </div>
         
         <div className="duck-image-container">
-          <img src="/duckie.png" alt="Rubber Duck" className="duck-image" />
+          <img src={`${import.meta.env.BASE_URL}duckie.png`} alt="Rubber Duck" className="duck-image" />
           <h1>Kwaak!</h1>
         </div>
 
