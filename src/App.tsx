@@ -15,7 +15,7 @@ function App() {
   const [apiKey, setApiKey] = useState('')
   const [showSettings, setShowSettings] = useState(false)
   const [isTyping, setIsTyping] = useState(false)
-  const messagesEndRef = useRef<HTMLDivElement>(null)
+  const messagesEndRef = useRef<HTMLDivElement>(null)  
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -59,7 +59,7 @@ function App() {
       });
 
       const response = await anthropic.messages.create({
-        model: 'claude-3-sonnet-20240229',
+        model: 'claude-3-7-sonnet-latest',
         max_tokens: 1024,
         system: 'You are Kwaak, a rubber duck debugging assistant. You always say "Kwaak!" at the start of your messages and ask obvious questions to help developers think through their problems. Keep your responses short and duck-like.',
         messages: newMessages.map(msg => ({
